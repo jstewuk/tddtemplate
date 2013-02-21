@@ -50,7 +50,7 @@ describe(@"Template", ^{
     });
     context(@"with  template 'Hello, ${name}', with no value for 'name'", ^{
         Template *template = [[Template alloc] initWithString:@"Hello, ${name}"];
-        pending(@"returns a nil string", ^{
+        it(@"returns a nil string", ^{
             [[template evaluate] shouldBeNil];
         });
     });

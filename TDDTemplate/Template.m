@@ -29,14 +29,31 @@
 }
 
 - (NSString*)evaluate {
+    NSString *result = [self stringWithFieldsReplaced];
+    if ([self hasRemainingTemplateFields:result]) {
+        result = nil;
+    } 
+    return result;
+}
+
+- (NSString *)stringWithFieldsReplaced {
     NSString *result = self.templateText;
     NSString *templateVar = nil;
     for (NSString* name in [self.variableHash allKeys]) {
         templateVar = [NSString stringWithFormat:@"${%@}", name];
         result = [result stringByReplacingOccurrencesOfString:templateVar
-                                                        withString:self.variableHash[name]];
+                                                   withString:self.variableHash[name]];
     }
     return result;
+}
+
+- (BOOL)hasRemainingTemplateFields:(NSString*)string {
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\$\\{.+\\}"
+                                                                           options:0
+                                                                             error:nil];
+    NSTextCheckingResult *checkResult = [regex firstMatchInString:string options:0 range:NSMakeRange(0, [string length])];
+    BOOL isFieldFound = (checkResult.range.length > 0);
+    return isFieldFound;
 }
 
 @end
