@@ -1,4 +1,4 @@
 platform :ios
-target :RPNCalculatorTests, :exclusive => true do
+target :TDDTemplate, :exclusive => true do
     pod 'Kiwi'
 end
