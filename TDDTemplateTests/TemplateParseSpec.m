@@ -9,6 +9,8 @@
 #import <Kiwi/Kiwi.h>
 
 #import "TemplateParse.h"
+#import "PlainTextSegment.h"
+#import "VariableSegment.h"
 
 #pragma mark - Helper functions
 
@@ -60,6 +62,21 @@ describe(@"TemplateParseSpec", ^{
         it(@"has 7 segments", ^{
             [[theValue([segments count]) should] equal:theValue(7)];
         });
+    });
+    
+    context(@"parsing template into segments!, given the template string: 'a ${b} c ${d}'", ^{
+        beforeEach(^{
+            testString = @"a ${b} c ${d}";
+            parse = [[TemplateParse alloc] initWithString:testString];
+            segments = [parse parseIntoSegments];
+        });
+        NSArray *expectedSegments = @[[PlainTextSegment segmentWithValue:@"a "],
+                                      [VariableSegment segmentWithValue:@"b"],
+                                      [PlainTextSegment segmentWithValue:@" c "],
+                                      [VariableSegment segmentWithValue:@"d"]];
+       it(@"there should be 2 VariableSegments and 2 PlainTest segments", ^{
+           [[segments should] containObjectsInArray:expectedSegments];
+       });
     });
 });
 SPEC_END

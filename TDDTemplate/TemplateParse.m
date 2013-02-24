@@ -7,6 +7,9 @@
 //
 
 #import "TemplateParse.h"
+#import "Template.h"  //FIX!!!!
+#import "VariableSegment.h"
+#import "PlainTextSegment.h"
 
 @interface TemplateParse ()
 @property (nonatomic, copy) NSString *string;
@@ -29,6 +32,19 @@
     NSArray *segmentRanges = [self variableSegmentRanges];
     NSArray *stringSegments = [self segmentsFromSegmentRanges:segmentRanges];
     return stringSegments;
+}
+
+- (NSArray *)parseIntoSegments {
+    NSMutableArray *segments = [NSMutableArray array];
+    NSArray *stringSegments = [self parse];
+    for (NSString* strSeg in stringSegments) {
+        if ([Template isVariable:strSeg]) {            
+            [segments addObject:[VariableSegment segmentWithValue:[Template cleanString:strSeg]]];
+        } else {
+            [segments addObject:[PlainTextSegment segmentWithValue:strSeg]];
+        }
+    }
+    return segments;
 }
 
 - (NSArray *)variableSegmentRanges {

@@ -50,7 +50,7 @@
 
 - (void)appendSegment:(NSString*)segment toResult:(NSMutableString *)mString error:(NSError**)error {
     NSString *stringFromSegment = segment;
-    if ([self isVariable:segment]) {
+    if ([Template isVariable:segment]) {
         stringFromSegment = [self evaluateVariable:segment error:error];
     }
     if (stringFromSegment) {
@@ -62,7 +62,7 @@
 
 - (NSString *)evaluateVariable:(NSString *)segment error:(NSError**)error {
     NSString *stringFromSegment=segment;
-    NSString *varName = [self cleanString:segment];
+    NSString *varName = [Template cleanString:segment];
     stringFromSegment = self.variableHash[varName];
     if (stringFromSegment == nil) {
         if (error != NULL) {
@@ -76,12 +76,12 @@
     return stringFromSegment;
 }
 
-- (BOOL)isVariable:(NSString *)segment {
++ (BOOL)isVariable:(NSString *)segment {
     return ([[segment substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"$"] &&
             [[segment substringWithRange:NSMakeRange([segment length] - 1, 1)] isEqualToString:@"}"]);
 }
 
-- (NSString *)cleanString:(NSString*)string {
++ (NSString *)cleanString:(NSString*)string {
     NSUInteger loc = 2;
     NSUInteger length = [string length] - loc - 1;
     return [string substringWithRange:NSMakeRange(loc, length)];

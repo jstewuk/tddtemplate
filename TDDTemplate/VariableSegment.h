@@ -1,5 +1,5 @@
 //
-//  TemplateParse.h
+//  VariableSegment.h
 //  TDDTemplate
 //
 //  Created by James Stewart on 2/24/13.
@@ -8,11 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TemplateParse : NSObject
-- (instancetype)initWithString:(NSString *)string;
+#import "SegmentInterface.h"
 
-- (NSArray *)parse;
-- (NSArray *)parseIntoSegments;
-
+@interface VariableSegment : NSObject <SegmentInterface>
 
 @end
