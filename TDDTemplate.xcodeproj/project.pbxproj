@@ -24,6 +24,9 @@
 		385D400D16D5D5BE00DA6D94 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385D3FE716D5D5BE00DA6D94 /* UIKit.framework */; };
 		385D400E16D5D5BE00DA6D94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 385D3FE916D5D5BE00DA6D94 /* Foundation.framework */; };
 		385D401616D5D5BE00DA6D94 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 385D401416D5D5BE00DA6D94 /* InfoPlist.strings */; };
+		3893003916DA46D40002BA9F /* RegexLearningSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3893003816DA46D40002BA9F /* RegexLearningSpec.m */; };
+		3893003B16DA511B0002BA9F /* TemplateParseSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3893003A16DA511B0002BA9F /* TemplateParseSpec.m */; };
+		3893003E16DA531D0002BA9F /* TemplateParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 3893003D16DA531D0002BA9F /* TemplateParse.m */; };
 		AF649F8FA8DC4557A6366482 /* libPods-TDDTemplate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45692B1A4D6948139527B627 /* libPods-TDDTemplate.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +64,10 @@
 		385D400B16D5D5BE00DA6D94 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		385D401316D5D5BE00DA6D94 /* TDDTemplateTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TDDTemplateTests-Info.plist"; sourceTree = "<group>"; };
 		385D401516D5D5BE00DA6D94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3893003816DA46D40002BA9F /* RegexLearningSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexLearningSpec.m; sourceTree = "<group>"; };
+		3893003A16DA511B0002BA9F /* TemplateParseSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateParseSpec.m; sourceTree = "<group>"; };
+		3893003C16DA531D0002BA9F /* TemplateParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateParse.h; sourceTree = "<group>"; };
+		3893003D16DA531D0002BA9F /* TemplateParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateParse.m; sourceTree = "<group>"; };
 		45692B1A4D6948139527B627 /* libPods-TDDTemplate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TDDTemplate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C163F33BB92B4490B2F37876 /* Pods-TDDTemplate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDDTemplate.xcconfig"; path = "Pods/Pods-TDDTemplate.xcconfig"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -133,6 +140,8 @@
 				385D3FEE16D5D5BE00DA6D94 /* Supporting Files */,
 				382FE22216D5DF7F009584B7 /* Template.h */,
 				382FE22316D5DF7F009584B7 /* Template.m */,
+				3893003C16DA531D0002BA9F /* TemplateParse.h */,
+				3893003D16DA531D0002BA9F /* TemplateParse.m */,
 			);
 			path = TDDTemplate;
 			sourceTree = "<group>";
@@ -155,6 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				382FE22016D5DCE3009584B7 /* TemplateSpec.m */,
+				3893003816DA46D40002BA9F /* RegexLearningSpec.m */,
+				3893003A16DA511B0002BA9F /* TemplateParseSpec.m */,
 				385D401216D5D5BE00DA6D94 /* Supporting Files */,
 			);
 			path = TDDTemplateTests;
@@ -299,6 +310,7 @@
 				385D3FF816D5D5BE00DA6D94 /* JSAppDelegate.m in Sources */,
 				385D400116D5D5BE00DA6D94 /* JSViewController.m in Sources */,
 				382FE22416D5DF7F009584B7 /* Template.m in Sources */,
+				3893003E16DA531D0002BA9F /* TemplateParse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +319,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				382FE22116D5DCE3009584B7 /* TemplateSpec.m in Sources */,
+				3893003916DA46D40002BA9F /* RegexLearningSpec.m in Sources */,
+				3893003B16DA511B0002BA9F /* TemplateParseSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

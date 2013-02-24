@@ -7,6 +7,7 @@
 //
 
 #import "Template.h"
+#import "TemplateParse.h"
 
 @interface Template ()
 @property (nonatomic, strong) NSMutableDictionary *variableHash;
