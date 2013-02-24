@@ -30,12 +30,39 @@
 }
 
 - (NSString*)evaluate {
-    NSString *result = [self stringWithFieldsReplaced];
-    if ([self hasRemainingTemplateFields:result]) {
-        result = nil;
-    } 
-    return result;
+    TemplateParse *parser = [[TemplateParse alloc] initWithString:self.templateText];
+    NSArray *segments = [parser parse];
+    NSMutableString *builtString = [NSMutableString string];
+    for (NSString* segment in segments) {
+        [self appendSegment:segment toResult:builtString];
+    }
+    return builtString;
 }
+
+- (void)appendSegment:(NSString*)segment toResult:(NSMutableString *)mString {
+    NSString *stringFromSegment = segment;
+    if ([self isVariable:segment]) {
+        NSString *varName = [self cleanString:segment];
+        stringFromSegment = self.variableHash[varName];
+        if (stringFromSegment == nil) {
+            NSLog(@"variable: %@ is not defined.", varName);
+            return;
+        }
+    }
+    [mString appendString:stringFromSegment];
+}
+
+- (BOOL)isVariable:(NSString *)segment {
+    return ([[segment substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"$"] &&
+            [[segment substringWithRange:NSMakeRange([segment length] - 1, 1)] isEqualToString:@"}"]);
+}
+
+- (NSString *)cleanString:(NSString*)string {
+    NSUInteger loc = 2;
+    NSUInteger length = [string length] - loc - 1;
+    return [string substringWithRange:NSMakeRange(loc, length)];
+}
+    
 
 - (NSString *)stringWithFieldsReplaced {
     NSString *result = self.templateText;

@@ -72,7 +72,7 @@ describe(@"Template", ^{
                 [template addVariable:@"two" withValue:@"${foo}"];
                 [template addVariable:@"three" withValue:@"3"];
             });
-            pending(@"results in the string '1, ${foo}, 3'", ^{
+            it(@"results in the string '1, ${foo}, 3'", ^{
                 [[[template evaluate] should] equal:@"1, ${foo}, 3"];
             });
         });
