@@ -79,7 +79,9 @@ describe(@"Template", ^{
     });
     
     context(@"with  template 'Hello, ${name}', with no value for 'name'", ^{
-        template = [[Template alloc] initWithString:@"Hello, ${name}"];
+        beforeEach(^{
+            template = [[Template alloc] initWithString:@"Hello, ${name}"];
+        });
         it(@"returns a nil string", ^{
             [[template evaluate] shouldBeNil];
         });

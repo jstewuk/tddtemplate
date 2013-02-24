@@ -32,24 +32,48 @@
 - (NSString*)evaluate {
     TemplateParse *parser = [[TemplateParse alloc] initWithString:self.templateText];
     NSArray *segments = [parser parse];
+    return [self concatenate:segments];
+}
+
+- (NSString*)concatenate:(NSArray *)segments {
     NSMutableString *builtString = [NSMutableString string];
+    NSError *error;
     for (NSString* segment in segments) {
-        [self appendSegment:segment toResult:builtString];
+        [self appendSegment:segment toResult:builtString error:&error];
+        if (error) {
+            builtString = nil;
+        }
     }
     return builtString;
 }
 
-- (void)appendSegment:(NSString*)segment toResult:(NSMutableString *)mString {
+
+- (void)appendSegment:(NSString*)segment toResult:(NSMutableString *)mString error:(NSError**)error {
     NSString *stringFromSegment = segment;
     if ([self isVariable:segment]) {
-        NSString *varName = [self cleanString:segment];
-        stringFromSegment = self.variableHash[varName];
-        if (stringFromSegment == nil) {
-            NSLog(@"variable: %@ is not defined.", varName);
-            return;
-        }
+        stringFromSegment = [self evaluateVariable:segment error:error];
     }
-    [mString appendString:stringFromSegment];
+    if (stringFromSegment) {
+        [mString appendString:stringFromSegment];
+    } else {
+        mString = nil;
+    }
+}
+
+- (NSString *)evaluateVariable:(NSString *)segment error:(NSError**)error {
+    NSString *stringFromSegment=segment;
+    NSString *varName = [self cleanString:segment];
+    stringFromSegment = self.variableHash[varName];
+    if (stringFromSegment == nil) {
+        if (error != NULL) {
+            *error = [NSError errorWithDomain:NSStringFromClass([self class])
+                                         code:101
+                                     userInfo:@{@"userInfo": @"variable not defined", @"missingVariable" : varName}];
+        }
+        NSLog(@"variable: %@ is not defined.", varName);
+        return nil;
+    }
+    return stringFromSegment;
 }
 
 - (BOOL)isVariable:(NSString *)segment {
@@ -63,25 +87,4 @@
     return [string substringWithRange:NSMakeRange(loc, length)];
 }
     
-
-- (NSString *)stringWithFieldsReplaced {
-    NSString *result = self.templateText;
-    NSString *templateVar = nil;
-    for (NSString* name in [self.variableHash allKeys]) {
-        templateVar = [NSString stringWithFormat:@"${%@}", name];
-        result = [result stringByReplacingOccurrencesOfString:templateVar
-                                                   withString:self.variableHash[name]];
-    }
-    return result;
-}
-
-- (BOOL)hasRemainingTemplateFields:(NSString*)string {
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\$\\{.+\\}"
-                                                                           options:0
-                                                                             error:nil];
-    NSTextCheckingResult *checkResult = [regex firstMatchInString:string options:0 range:NSMakeRange(0, [string length])];
-    BOOL isFieldFound = (checkResult.range.length > 0);
-    return isFieldFound;
-}
-
 @end
