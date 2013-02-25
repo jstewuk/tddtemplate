@@ -143,21 +143,21 @@
 		385D3FED16D5D5BE00DA6D94 /* TDDTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				3893003F16DAA7EC0002BA9F /* SegmentInterface.h */,
-				3893004016DAA81B0002BA9F /* PlainTextSegment.h */,
-				3893004116DAA81B0002BA9F /* PlainTextSegment.m */,
-				3893004316DAA8300002BA9F /* VariableSegment.h */,
-				3893004416DAA8300002BA9F /* VariableSegment.m */,
 				385D3FF616D5D5BE00DA6D94 /* JSAppDelegate.h */,
 				385D3FF716D5D5BE00DA6D94 /* JSAppDelegate.m */,
 				385D3FFF16D5D5BE00DA6D94 /* JSViewController.h */,
 				385D400016D5D5BE00DA6D94 /* JSViewController.m */,
 				385D400216D5D5BE00DA6D94 /* JSViewController.xib */,
-				385D3FEE16D5D5BE00DA6D94 /* Supporting Files */,
+				3893003F16DAA7EC0002BA9F /* SegmentInterface.h */,
+				3893004016DAA81B0002BA9F /* PlainTextSegment.h */,
+				3893004116DAA81B0002BA9F /* PlainTextSegment.m */,
+				3893004316DAA8300002BA9F /* VariableSegment.h */,
+				3893004416DAA8300002BA9F /* VariableSegment.m */,
 				382FE22216D5DF7F009584B7 /* Template.h */,
 				382FE22316D5DF7F009584B7 /* Template.m */,
 				3893003C16DA531D0002BA9F /* TemplateParse.h */,
 				3893003D16DA531D0002BA9F /* TemplateParse.m */,
+				385D3FEE16D5D5BE00DA6D94 /* Supporting Files */,
 			);
 			path = TDDTemplate;
 			sourceTree = "<group>";

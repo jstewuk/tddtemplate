@@ -7,7 +7,6 @@
 //
 
 #import "TemplateParse.h"
-#import "Template.h"  //FIX!!!!
 #import "VariableSegment.h"
 #import "PlainTextSegment.h"
 
@@ -30,16 +29,7 @@
 
 - (NSArray *)parseIntoSegments {
     NSArray *segmentRanges = [self variableSegmentRanges];
-    NSArray *stringSegments = [self segmentsFromSegmentRanges:segmentRanges];
-    
-    NSMutableArray *segments = [NSMutableArray array];
-    for (NSString* strSeg in stringSegments) {
-        if ([self isVariable:strSeg]) {
-            [segments addObject:[VariableSegment segmentWithValue:[self cleanString:strSeg]]];
-        } else {
-            [segments addObject:[PlainTextSegment segmentWithValue:strSeg]];
-        }
-    }
+    NSArray *segments = [self segmentsFromSegmentRanges:segmentRanges];
     return segments;
 }
 
@@ -49,28 +39,32 @@
 
 - (NSArray *)segmentsFromSegmentRanges:(NSArray *)segmentRanges {
     if ([segmentRanges count] == 0) {
-        return  @[self.string];  // fix this....
+        return  @[[PlainTextSegment segmentWithValue:@""]]; 
     }
     
     assert([segmentRanges[0] isKindOfClass:[NSTextCheckingResult class]]);
     NSMutableArray *segmentArray = [NSMutableArray array];
     
-    for (NSUInteger matchIndex = 0; matchIndex < [segmentRanges count]; ++matchIndex) {
-        NSString *tempString = [self textPrecedingMatchIndex:matchIndex segmentRanges:segmentRanges];
-        if ([tempString length]) {
-            [segmentArray addObject:tempString];
-        }
-        tempString = [self variableAtMatchIndex:matchIndex segmentRanges:segmentRanges];
-        if ([tempString length]) {
-            [segmentArray addObject:tempString];
-        }
-    }
+    [self addMatchesAndPrecedingText:segmentArray segmentRanges:segmentRanges];
     NSTextCheckingResult *lastMatchResult = segmentRanges[ [segmentRanges count] - 1 ];
     NSString *tempString = [self textAfterLastMatch:lastMatchResult];
     if ([tempString length]) {
-    [segmentArray addObject:tempString];
+        [segmentArray addObject:[PlainTextSegment segmentWithValue:tempString]];
     }
     return segmentArray;
+}
+
+- (void)addMatchesAndPrecedingText:(NSMutableArray *)segmentArray segmentRanges:(NSArray *)segmentRanges {
+    for (NSUInteger matchIndex = 0; matchIndex < [segmentRanges count]; ++matchIndex) {
+        NSString *tempString = [self textPrecedingMatchIndex:matchIndex segmentRanges:segmentRanges];
+        if ([tempString length]) {
+            [segmentArray addObject:[PlainTextSegment segmentWithValue:tempString]];
+        }
+        tempString = [self variableAtMatchIndex:matchIndex segmentRanges:segmentRanges];
+        if ([tempString length]) {
+            [segmentArray addObject:[VariableSegment segmentWithValue:[self cleanString:tempString]]];
+        }
+    }
 }
 
 - (NSString*)textPrecedingMatchIndex:(NSUInteger)matchIndex segmentRanges:(NSArray*)segmentRanges {
@@ -104,7 +98,6 @@
     }
     return [self.string substringWithRange:range];
 }
-
 
 - (BOOL)isVariable:(NSString *)segment {
     return ([segment length] > 0 &&
