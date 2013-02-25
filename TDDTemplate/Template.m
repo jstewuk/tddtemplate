@@ -7,6 +7,8 @@
 //
 
 #import "Template.h"
+#import "TemplateParse.h"
+#import "SegmentInterface.h"
 
 @interface Template ()
 @property (nonatomic, strong) NSMutableDictionary *variableHash;
@@ -29,31 +31,29 @@
 }
 
 - (NSString*)evaluate {
-    NSString *result = [self stringWithFieldsReplaced];
-    if ([self hasRemainingTemplateFields:result]) {
-        result = nil;
-    } 
-    return result;
+    TemplateParse *parser = [[TemplateParse alloc] initWithString:self.templateText];
+    NSArray *segments = [parser parseIntoSegments];
+    return [self concatenate:segments];
 }
 
-- (NSString *)stringWithFieldsReplaced {
-    NSString *result = self.templateText;
-    NSString *templateVar = nil;
-    for (NSString* name in [self.variableHash allKeys]) {
-        templateVar = [NSString stringWithFormat:@"${%@}", name];
-        result = [result stringByReplacingOccurrencesOfString:templateVar
-                                                   withString:self.variableHash[name]];
+- (NSString*)concatenate:(NSArray *)segments {
+    NSMutableString *builtString = [NSMutableString string];
+    NSError *error;
+    for (id<SegmentInterface> segment in segments) {
+        NSString *segStr = [segment evaluateWithVariables:self.variableHash error:&error];
+        if (!segStr && error) {
+            builtString = nil;
+        } else if ( [segStr length] == 0 ) {
+            ; // don't append!
+        } else {
+            [self appendSegment:segStr toResult:builtString error:nil];
+        }
     }
-    return result;
+    return builtString;
 }
 
-- (BOOL)hasRemainingTemplateFields:(NSString*)string {
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\$\\{.+\\}"
-                                                                           options:0
-                                                                             error:nil];
-    NSTextCheckingResult *checkResult = [regex firstMatchInString:string options:0 range:NSMakeRange(0, [string length])];
-    BOOL isFieldFound = (checkResult.range.length > 0);
-    return isFieldFound;
+- (void)appendSegment:(NSString*)segment toResult:(NSMutableString *)mString error:(NSError**)error {
+    [mString appendString:segment];
 }
 
 @end

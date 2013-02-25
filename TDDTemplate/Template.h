@@ -12,5 +12,4 @@
 - (instancetype)initWithString:(NSString *)templateString;
 - (void)addVariable:(NSString*)name withValue:(NSString*)value;
 - (NSString*)evaluate;
-
 @end
