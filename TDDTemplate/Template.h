@@ -12,8 +12,4 @@
 - (instancetype)initWithString:(NSString *)templateString;
 - (void)addVariable:(NSString*)name withValue:(NSString*)value;
 - (NSString*)evaluate;
-
-+ (BOOL)isVariable:(NSString *)segment;  //FIX
-+ (NSString *)cleanString:(NSString*)string;  //FIX
-
 @end

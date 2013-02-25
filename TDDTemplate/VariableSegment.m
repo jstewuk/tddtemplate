@@ -28,6 +28,18 @@
     return self;
 }
 
+- (NSString *)evaluateWithVariables:(NSDictionary *)variables error:(NSError **)error{
+    NSString *returnValue = variables[self.value];
+    if (returnValue == nil) {
+        if (error != NULL) {
+            *error = [NSError errorWithDomain:NSStringFromClass([self class])
+                                         code:101
+                                     userInfo:@{@"userInfo": @"variable not defined", @"missingVariable" : self.value}];
+        }
+    }
+    return returnValue;
+}
+
 - (BOOL) isEqual:(id)object {
     if (! [object isKindOfClass:[self class]]) {
         return NO;

@@ -31,33 +31,33 @@ describe(@"TemplateParseSpec", ^{
         beforeEach(^{
             testString = @"";
             parse = [[TemplateParse alloc] initWithString:testString];
-            segments = [parse parse];
+            segments = [parse parseIntoSegments];
         });
         it (@"has only 1 segment", ^{
             [[theValue([segments count]) should] equal:theValue(1)];
         });
-        it (@"the first segment is ''", ^{
-            [[segments[0] should] beIdenticalTo:@""];
+        it (@"the first segment is a PlainTextSegmentd", ^{
+            [[segments[0] should] beKindOfClass:[PlainTextSegment class]];
         });
     });
     context(@"given a plain text template: 'plain text only'", ^{
         beforeEach(^{
             testString = @"plain text only";
             parse = [[TemplateParse alloc] initWithString:testString];
-            segments = [parse parse];
+            segments = [parse parseIntoSegments];
         });
         it(@"has only one segment", ^{
             [[theValue([segments count]) should] equal:theValue(1)];
         });
-        it (@"the first segment is 'plain text only'", ^{
-            [[segments[0] should] beIdenticalTo:@"plain text only"];
+        it (@"the first segment is a PlainTextSegment", ^{
+            [[segments[0] should] beKindOfClass:[PlainTextSegment class]];
         });
     });
     context(@"given a template with multiple variables", ^{
         beforeEach(^{
             testString = @"${a}:${b}:${c}:${d}";
             parse = [[TemplateParse alloc] initWithString:testString];
-            segments = [parse parse];
+            segments = [parse parseIntoSegments];
         });
         it(@"has 7 segments", ^{
             [[theValue([segments count]) should] equal:theValue(7)];

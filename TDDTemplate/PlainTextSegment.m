@@ -27,6 +27,10 @@
     return self;
 }
 
+- (NSString *)evaluateWithVariables:(NSDictionary *)variables error:(NSError **)error {
+    return self.value;
+}
+
 - (BOOL) isEqual:(id)object {
     if (! [object isKindOfClass:[self class]]) {
         return NO;

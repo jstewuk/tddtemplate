@@ -11,7 +11,6 @@
 @interface TemplateParse : NSObject
 - (instancetype)initWithString:(NSString *)string;
 
-- (NSArray *)parse;
 - (NSArray *)parseIntoSegments;
 
 

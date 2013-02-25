@@ -8,6 +8,7 @@
 
 #import "Template.h"
 #import "TemplateParse.h"
+#import "SegmentInterface.h"
 
 @interface Template ()
 @property (nonatomic, strong) NSMutableDictionary *variableHash;
@@ -31,60 +32,28 @@
 
 - (NSString*)evaluate {
     TemplateParse *parser = [[TemplateParse alloc] initWithString:self.templateText];
-    NSArray *segments = [parser parse];
+    NSArray *segments = [parser parseIntoSegments];
     return [self concatenate:segments];
 }
 
 - (NSString*)concatenate:(NSArray *)segments {
     NSMutableString *builtString = [NSMutableString string];
     NSError *error;
-    for (NSString* segment in segments) {
-        [self appendSegment:segment toResult:builtString error:&error];
-        if (error) {
+    for (id<SegmentInterface> segment in segments) {
+        NSString *segStr = [segment evaluateWithVariables:self.variableHash error:&error];
+        if (!segStr && error) {
             builtString = nil;
+        } else if ( [segStr length] == 0 ) {
+            ; // don't append!
+        } else {
+            [self appendSegment:segStr toResult:builtString error:nil];
         }
     }
     return builtString;
 }
 
-
 - (void)appendSegment:(NSString*)segment toResult:(NSMutableString *)mString error:(NSError**)error {
-    NSString *stringFromSegment = segment;
-    if ([Template isVariable:segment]) {
-        stringFromSegment = [self evaluateVariable:segment error:error];
-    }
-    if (stringFromSegment) {
-        [mString appendString:stringFromSegment];
-    } else {
-        mString = nil;
-    }
+    [mString appendString:segment];
 }
 
-- (NSString *)evaluateVariable:(NSString *)segment error:(NSError**)error {
-    NSString *stringFromSegment=segment;
-    NSString *varName = [Template cleanString:segment];
-    stringFromSegment = self.variableHash[varName];
-    if (stringFromSegment == nil) {
-        if (error != NULL) {
-            *error = [NSError errorWithDomain:NSStringFromClass([self class])
-                                         code:101
-                                     userInfo:@{@"userInfo": @"variable not defined", @"missingVariable" : varName}];
-        }
-        NSLog(@"variable: %@ is not defined.", varName);
-        return nil;
-    }
-    return stringFromSegment;
-}
-
-+ (BOOL)isVariable:(NSString *)segment {
-    return ([[segment substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"$"] &&
-            [[segment substringWithRange:NSMakeRange([segment length] - 1, 1)] isEqualToString:@"}"]);
-}
-
-+ (NSString *)cleanString:(NSString*)string {
-    NSUInteger loc = 2;
-    NSUInteger length = [string length] - loc - 1;
-    return [string substringWithRange:NSMakeRange(loc, length)];
-}
-    
 @end

@@ -10,4 +10,5 @@
 
 @protocol SegmentInterface <NSObject>
 + (instancetype)segmentWithValue:(NSString*)value;
+- (NSString *)evaluateWithVariables:(NSDictionary*)variables error:(NSError**)error;
 @end

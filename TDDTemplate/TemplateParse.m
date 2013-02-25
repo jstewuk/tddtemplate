@@ -28,18 +28,14 @@
     return self;
 }
 
-- (NSArray *)parse {
+- (NSArray *)parseIntoSegments {
     NSArray *segmentRanges = [self variableSegmentRanges];
     NSArray *stringSegments = [self segmentsFromSegmentRanges:segmentRanges];
-    return stringSegments;
-}
-
-- (NSArray *)parseIntoSegments {
+    
     NSMutableArray *segments = [NSMutableArray array];
-    NSArray *stringSegments = [self parse];
     for (NSString* strSeg in stringSegments) {
-        if ([Template isVariable:strSeg]) {            
-            [segments addObject:[VariableSegment segmentWithValue:[Template cleanString:strSeg]]];
+        if ([self isVariable:strSeg]) {
+            [segments addObject:[VariableSegment segmentWithValue:[self cleanString:strSeg]]];
         } else {
             [segments addObject:[PlainTextSegment segmentWithValue:strSeg]];
         }
@@ -107,6 +103,19 @@
         range = NSMakeRange(lengthOfStringToEndOfMatch, length);
     }
     return [self.string substringWithRange:range];
+}
+
+
+- (BOOL)isVariable:(NSString *)segment {
+    return ([segment length] > 0 &&
+            [[segment substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"$"] &&
+            [[segment substringWithRange:NSMakeRange([segment length] - 1, 1)] isEqualToString:@"}"]);
+}
+
+- (NSString *)cleanString:(NSString*)string {
+    NSUInteger loc = 2;
+    NSUInteger length = [string length] - loc - 1;
+    return [string substringWithRange:NSMakeRange(loc, length)];
 }
 
 @end

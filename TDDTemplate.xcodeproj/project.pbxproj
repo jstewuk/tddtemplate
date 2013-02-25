@@ -30,6 +30,7 @@
 		3893004216DAA81B0002BA9F /* PlainTextSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3893004116DAA81B0002BA9F /* PlainTextSegment.m */; };
 		3893004516DAA8300002BA9F /* VariableSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3893004416DAA8300002BA9F /* VariableSegment.m */; };
 		3893004716DAD68D0002BA9F /* PlainTextSegmentSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3893004616DAD68D0002BA9F /* PlainTextSegmentSpec.m */; };
+		3893004916DAD9C20002BA9F /* VariableSegmentSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3893004816DAD9C20002BA9F /* VariableSegmentSpec.m */; };
 		AF649F8FA8DC4557A6366482 /* libPods-TDDTemplate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45692B1A4D6948139527B627 /* libPods-TDDTemplate.a */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		3893004316DAA8300002BA9F /* VariableSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariableSegment.h; sourceTree = "<group>"; };
 		3893004416DAA8300002BA9F /* VariableSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableSegment.m; sourceTree = "<group>"; };
 		3893004616DAD68D0002BA9F /* PlainTextSegmentSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlainTextSegmentSpec.m; sourceTree = "<group>"; };
+		3893004816DAD9C20002BA9F /* VariableSegmentSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableSegmentSpec.m; sourceTree = "<group>"; };
 		45692B1A4D6948139527B627 /* libPods-TDDTemplate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TDDTemplate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C163F33BB92B4490B2F37876 /* Pods-TDDTemplate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDDTemplate.xcconfig"; path = "Pods/Pods-TDDTemplate.xcconfig"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -180,6 +182,7 @@
 				382FE22016D5DCE3009584B7 /* TemplateSpec.m */,
 				3893003816DA46D40002BA9F /* RegexLearningSpec.m */,
 				3893004616DAD68D0002BA9F /* PlainTextSegmentSpec.m */,
+				3893004816DAD9C20002BA9F /* VariableSegmentSpec.m */,
 				3893003A16DA511B0002BA9F /* TemplateParseSpec.m */,
 				385D401216D5D5BE00DA6D94 /* Supporting Files */,
 			);
@@ -339,6 +342,7 @@
 				3893003916DA46D40002BA9F /* RegexLearningSpec.m in Sources */,
 				3893003B16DA511B0002BA9F /* TemplateParseSpec.m in Sources */,
 				3893004716DAD68D0002BA9F /* PlainTextSegmentSpec.m in Sources */,
+				3893004916DAD9C20002BA9F /* VariableSegmentSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
